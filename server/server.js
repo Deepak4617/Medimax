@@ -18,10 +18,16 @@ const app = express();
 // 🔹 CORS Configuration
 const corsOptions = {
   origin: [
+    "https://medimaxai-1zle.onrender.com",
     "http://localhost:5173",
   ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   credentials: true,
 };
+
+
+// ✅ VERY IMPORTANT — allow preflight
+app.options("*", cors(corsOptions));
 
 app.use(cors(corsOptions));
 
