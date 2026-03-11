@@ -1,9 +1,8 @@
 require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
+const app = express();
 
-// 🔹 Import DB connection
-const connectDb = require("./utils/database/db");
 
 // 🔹 Import Routes
 const authRoute = require("./routes/authRoutes");
@@ -11,9 +10,9 @@ const appointmentsRoutes = require("./routes/appointmentsRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 const patientRoutes = require("./routes/patientRoutes")
 const billingRoutes = require("./routes/billingRoutes");
-const errorMiddleware = require('./middleware/errorMiddleware');
 
-const app = express();
+const connectDb = require("./utils/database/db");
+const errorMiddleware = require('./middleware/errorMiddleware');
 
 // 🔹 CORS Configuration
 const corsOptions = {
@@ -25,14 +24,14 @@ const corsOptions = {
   credentials: true,
 };
 
+app.use(cors(corsOptions));
 
 // ✅ VERY IMPORTANT — allow preflight
 app.options("*", cors(corsOptions));
 
-app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 // ================= ROUTES =================
 
@@ -43,11 +42,6 @@ app.use("/api", doctorRoutes);
 
 app.use("/api", patientRoutes);
 app.use("/api/billing", billingRoutes);
-
-// 🔹 Test Route
-app.get("/", (req, res) => {
-  res.send("Hospital Management API Running...");
-});
 
 app.use(errorMiddleware);
 
