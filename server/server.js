@@ -29,6 +29,9 @@ app.use(cors(corsOptions));
 // ✅ VERY IMPORTANT — allow preflight
 // app.options("/*", cors(corsOptions));
 
+app.get("/", (req, res) => {
+  res.send("🚀 MedimaxAI API is running...");
+});
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
