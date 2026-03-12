@@ -1,61 +1,72 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import Sidebar from "../../componets/sideBar";
 import Navbar from "../../componets/navBar";
+import useCustomDispatch from "../../hooks/useCustomDispatch";
+
+import getDoctorAppoinments from "../../services/api/doctor/getDoctorAppoinments";
+
+import { useAuthSelector } from "../../services/selector/authSelector";
 
 const DoctorDashboard = () => {
 
-  const appointments = [
-    { patient: "Rahul", date: "10 March", status: "Pending" },
-    { patient: "Aman", date: "11 March", status: "Confirmed" }
-  ];
+  const dispatch = useCustomDispatch();
+
+  const { getDoctorAppoinmentsResponse } = useAuthSelector();
+
+  const appointments = getDoctorAppoinmentsResponse?.data?.appointments || [];
+
+  useEffect(() => {
+    dispatch(getDoctorAppoinments());
+  }, [dispatch]);
 
   return (
-    <div className="flex">
-
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
+    
       <Sidebar role="doctor" />
 
-      <div className="flex-1 bg-gray-100 min-h-screen">
+      <div className="flex-1 flex flex-col">
 
         <Navbar />
 
-        <div className="p-6">
+        <div className="p-4 md:p-6">
 
-          <h2 className="text-2xl font-bold mb-5">Appointments</h2>
+          <h1 className="text-2xl md:text-3xl font-bold mb-6">
+            Doctor Dashboard
+          </h1>
 
-          <table className="w-full bg-white shadow rounded">
 
-            <thead className="bg-blue-500 text-white">
-              <tr>
-                <th className="p-3">Patient</th>
-                <th className="p-3">Date</th>
-                <th className="p-3">Status</th>
-                <th className="p-3">Action</th>
-              </tr>
-            </thead>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 
-            <tbody>
-              {appointments.map((a, i) => (
-                <tr key={i} className="text-center border-b">
+            <div className="bg-white p-5 rounded-lg shadow">
+              <h3 className="text-gray-500 text-sm">Total Appointments</h3>
+              <p className="text-2xl font-bold text-blue-600 mt-2">
+                {appointments.length}
+              </p>
+            </div>
 
-                  <td className="p-3">{a.patient}</td>
-                  <td className="p-3">{a.date}</td>
-                  <td className="p-3">{a.status}</td>
+            <div className="bg-white p-5 rounded-lg shadow">
+              <h3 className="text-gray-500 text-sm">Pending</h3>
+              <p className="text-2xl font-bold text-yellow-500 mt-2">
+                {appointments.filter(a => a.status === "pending").length}
+              </p>
+            </div>
 
-                  <td>
-                    <button className="bg-green-500 text-white px-3 py-1 rounded mr-2">
-                      Approve
-                    </button>
+            <div className="bg-white p-5 rounded-lg shadow">
+              <h3 className="text-gray-500 text-sm">Approved</h3>
+              <p className="text-2xl font-bold text-green-600 mt-2">
+                {appointments.filter(a => a.status === "approved").length}
+              </p>
+            </div>
 
-                    <button className="bg-red-500 text-white px-3 py-1 rounded">
-                      Reject
-                    </button>
-                  </td>
+            <div className="bg-white p-5 rounded-lg shadow">
+              <h3 className="text-gray-500 text-sm">completed</h3>
+              <p className="text-2xl font-bold text-blue-500 mt-2">
+                {appointments.filter(a => a.status === "completed").length}
+              </p>
+            </div>
 
-                </tr>
-              ))}
-            </tbody>
-
-          </table>
+          </div>
 
         </div>
 

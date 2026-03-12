@@ -44,61 +44,66 @@ const Patients = () => {
   };
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
       <Sidebar />
 
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
 
-        <h2 className="text-2xl font-bold mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-6">
           Patients List
         </h2>
 
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-white rounded-lg shadow overflow-x-auto">
 
-          <table className="w-full text-left">
+          <table className="min-w-full text-left">
 
-            <thead className="bg-gray-50 border-b">
+            <thead className="bg-gray-50 border-b text-sm uppercase tracking-wide text-gray-600">
+
               <tr>
-                <th className="p-4">Name</th>
-                <th className="p-4">Email</th>
-                <th className="p-4">Phone</th>
-                <th className="p-4 text-center">Action</th>
+                <th className="p-3 sm:p-4">Name</th>
+                <th className="p-3 sm:p-4">Email</th>
+                <th className="p-3 sm:p-4">Phone</th>
+                <th className="p-3 sm:p-4 text-center">Action</th>
               </tr>
+
             </thead>
 
             <tbody>
 
               {patients.length === 0 && (
+
                 <tr>
                   <td colSpan="4" className="text-center p-6 text-gray-500">
                     No patients found
                   </td>
                 </tr>
+
               )}
 
               {patients.map((patient) => (
+
                 <tr
                   key={patient._id}
-                  className="border-b hover:bg-gray-50"
+                  className="border-b hover:bg-gray-50 transition"
                 >
 
-                  <td className="p-4 font-medium">
+                  <td className="p-3 sm:p-4 font-medium">
                     {patient.name}
                   </td>
 
-                  <td className="p-4">
+                  <td className="p-3 sm:p-4 break-words">
                     {patient.email}
                   </td>
 
-                  <td className="p-4">
+                  <td className="p-3 sm:p-4">
                     {patient.phone}
                   </td>
 
-                  <td className="p-4 flex justify-center">
+                  <td className="p-3 sm:p-4 text-center">
 
                     <button
                       onClick={() => handleDeleteClick(patient._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded"
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded text-sm transition"
                     >
                       Delete
                     </button>
@@ -106,6 +111,7 @@ const Patients = () => {
                   </td>
 
                 </tr>
+
               ))}
 
             </tbody>

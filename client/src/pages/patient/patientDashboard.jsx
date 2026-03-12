@@ -1,6 +1,8 @@
 import React from "react";
+
 import Sidebar from "../../componets/sideBar";
 import Navbar from "../../componets/navBar";
+
 import { FaUserMd, FaCalendarCheck, FaHistory } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -10,17 +12,13 @@ const PatientDashboard = () => {
 
   return (
 
-    <div className="flex">
-
-      {/* Sidebar */}
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
       <Sidebar />
 
       <div className="flex-1 bg-gray-100 min-h-screen">
 
-        {/* Navbar */}
         <Navbar />
 
-        {/* Dashboard Content */}
         <div className="p-6">
 
           <h1 className="text-2xl font-bold mb-6">

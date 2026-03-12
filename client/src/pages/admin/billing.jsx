@@ -44,48 +44,57 @@ const Billing = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className="md:flex h-screen bg-gray-100">
 
         <Sidebar />
 
-        <div className="flex-1 p-6 bg-gray-50 min-h-screen">
+        <div className="flex-1 p-4 sm:p-6 bg-gray-50 min-h-screen overflow-y-auto">
 
           {/* HEADER */}
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
 
-            <h2 className="text-2xl font-bold">
+            <h2 className="text-xl sm:text-2xl font-bold">
               Billing Dashboard
             </h2>
 
             <button
               onClick={() => setShowModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              className="bg-blue-600 text-white px-4 py-2 rounded w-full sm:w-auto"
             >
               + Create Bill
             </button>
 
           </div>
 
-          {/* STATS CARDS */}
-          <div className="grid grid-cols-3 gap-6 mb-8">
+          {/* CARDS */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
 
-            <div className="bg-white p-6 rounded shadow">
-              <h4 className="text-gray-500">Total Revenue</h4>
-              <p className="text-2xl font-bold text-green-600">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow text-center sm:text-left">
+              <h4 className="text-gray-500 text-sm sm:text-base">
+                Total Revenue
+              </h4>
+
+              <p className="text-xl sm:text-2xl font-bold text-green-600 mt-1">
                 ₹{totalRevenue}
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded shadow">
-              <h4 className="text-gray-500">Pending Bills</h4>
-              <p className="text-2xl font-bold text-yellow-600">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow text-center sm:text-left">
+              <h4 className="text-gray-500 text-sm sm:text-base">
+                Pending Bills
+              </h4>
+
+              <p className="text-xl sm:text-2xl font-bold text-yellow-600 mt-1">
                 ₹{pendingBillsAmount}
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded shadow">
-              <h4 className="text-gray-500">Paid Bills</h4>
-              <p className="text-2xl font-bold text-blue-600">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow text-center sm:text-left">
+              <h4 className="text-gray-500 text-sm sm:text-base">
+                Paid Bills
+              </h4>
+
+              <p className="text-xl sm:text-2xl font-bold text-blue-600 mt-1">
                 ₹{paidBillsAmount}
               </p>
             </div>
@@ -98,28 +107,27 @@ const Billing = () => {
             <input
               type="text"
               placeholder="Search patient..."
-              className="border p-2 rounded w-64"
+              className="border p-2 rounded w-full sm:w-64"
             />
 
           </div>
 
-          {/* BILL TABLE */}
-          <div className="bg-white rounded shadow overflow-hidden">
+          {/* TABLE */}
+          <div className="bg-white rounded shadow overflow-x-auto">
 
-            <table className="w-full">
+            <table className="min-w-full">
 
               <thead className="bg-gray-100">
-
                 <tr>
                   <th className="p-3 border">Patient</th>
                   <th className="p-3 border">Doctor</th>
                   <th className="p-3 border">Amount</th>
                   <th className="p-3 border">Status</th>
                 </tr>
-
               </thead>
 
               <tbody>
+
                 {getAllBillsResponse?.loading && (
                   <tr>
                     <td colSpan="4" className="text-center p-6 text-gray-500">
@@ -140,7 +148,6 @@ const Billing = () => {
                       {bill.doctorId?.name || "Doctor Deleted"}
                     </td>
 
-
                     <td className="p-3 border font-semibold text-green-600">
                       ₹{bill.totalAmount}
                     </td>
@@ -149,8 +156,8 @@ const Billing = () => {
 
                       <span
                         className={`px-3 py-1 rounded-full text-sm ${bill.paymentStatus === "Paid"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-yellow-100 text-yellow-700"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-yellow-100 text-yellow-700"
                           }`}
                       >
                         {bill.paymentStatus}
@@ -171,8 +178,6 @@ const Billing = () => {
         </div>
 
       </div>
-
-      {/* CREATE BILL MODAL */}
 
       <BillModel
         showModal={showModal}

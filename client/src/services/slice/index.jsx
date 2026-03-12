@@ -18,7 +18,7 @@ export const rootReducer = combineReducers({
     getAllDoctors: doctor?.getAllDoctorsSlice,
     getAllAppointments: doctor?.getAllAppointmentsSlice,
     updateAppointmentStatusSlice: doctor?.updateAppoinmentsStatus,
-    getDoctorAppoinmentsSlice: doctor?.getDoctorAppointments,
+    getDoctorAppoinments: doctor?.getDoctorAppoinmentsSlice,
     addDoctors: doctor?.addDoctorsSlice,
     deleteDoctor: doctor?.deleteDoctorSlice,
 

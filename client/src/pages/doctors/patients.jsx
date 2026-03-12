@@ -1,59 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 
 import Sidebar from "../../componets/sideBar";
 
 import getDoctorAppoinments from "../../services/api/doctor/getDoctorAppoinments";
 
+import useCustomDispatch from "../../hooks/useCustomDispatch";
+import { useAuthSelector } from "../../services/selector/authSelector";
+
 const Patients = () => {
 
-  const dispatch = useDispatch();
-  const [appointments, setAppointments] = useState([]);
+  const dispatch = useCustomDispatch();
+
+  const { getDoctorAppoinmentsResponse } = useAuthSelector();
+
+  const appointments =
+    getDoctorAppoinmentsResponse?.data?.appointments || [];
 
   useEffect(() => {
 
-    const fetchData = async () => {
-
-      try {
-
-        const res = await dispatch(getDoctorAppoinments()).unwrap();
-        setAppointments(res.appointments || []);
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
-
-    };
-
-    fetchData();
+    dispatch(getDoctorAppoinments());
 
   }, [dispatch]);
 
   return (
 
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="md:flex min-h-screen bg-gray-100">
 
-      {/* Sidebar */}
       <Sidebar />
 
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-4 md:p-8">
 
-        <h2 className="text-2xl font-bold mb-6">
+        <h2 className="text-xl md:text-2xl font-bold mb-6">
           My Patients
         </h2>
 
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-white rounded-lg shadow overflow-x-auto">
 
-          <table className="w-full text-left">
+          <table className="w-full min-w-[600px] text-left">
 
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="p-4">Name</th>
-                <th className="p-4">Email</th>
-                <th className="p-4">Phone</th>
-                <th className="p-4">Status</th>
+                <th className="p-2 md:p-4">Name</th>
+                <th className="p-2 md:p-4">Email</th>
+                <th className="p-2 md:p-4">Phone</th>
+                <th className="p-2 md:p-4">Status</th>
               </tr>
             </thead>
 
@@ -76,22 +66,22 @@ const Patients = () => {
                     className="border-b hover:bg-gray-50"
                   >
 
-                    <td className="p-4 font-medium">
-                      {p?.patient?.name || 'Patinet Delete'}
+                    <td className="p-2 md:p-4 font-medium">
+                      {p?.patient?.name || "Patient Deleted"}
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-2 md:p-4 break-words">
                       {p?.patient?.email}
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-2 md:p-4">
                       {p?.patient?.phone || "-"}
                     </td>
 
-                    <td className="p-4">
+                    <td className="p-2 md:p-4">
 
                       <span
-                        className={`px-3 py-1 rounded text-white text-sm ${
+                        className={`px-2 md:px-3 py-1 rounded text-white text-xs md:text-sm ${
                           p.status === "pending"
                             ? "bg-yellow-500"
                             : p.status === "approved"

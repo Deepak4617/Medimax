@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import Sidebar from "../../componets/sideBar";
-import { useDispatch } from "react-redux";
 
+import Sidebar from "../../componets/sideBar";
 import getMyAppointments from "../../services/api/patient/getMyAppoinments";
-import { useAuthSelector } from "../../services/selector/authSelector";
+
 import Loader from "../../common/loader2";
+import useCustomDispatch from "../../hooks/useCustomDispatch";
+
+import { useAuthSelector } from "../../services/selector/authSelector";
 
 const Appointments = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useCustomDispatch();
 
     const { getMyAppoinmentsResponse } = useAuthSelector();
 
@@ -26,32 +28,34 @@ const Appointments = () => {
     };
 
     return (
-        <div className="flex bg-gray-100 min-h-screen">
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
             <Sidebar />
 
-            <div className="flex-1 p-8">
+            <div className="flex-1 p-4 md:p-8 overflow-x-auto">
 
-                <h2 className="text-2xl font-bold mb-6">My Appointments</h2>
+                <h2 className="text-xl md:text-2xl font-bold mb-6">
+                    My Appointments
+                </h2>
 
-                <div className="bg-white rounded-lg shadow overflow-hidden">
+                <div className="bg-white rounded-lg shadow overflow-x-auto">
 
-                    <table className="w-full text-left">
+                    <table className="min-w-[700px] w-full text-left">
+
                         <thead className="bg-gray-50 border-b">
                             <tr>
-                                <th className="p-4">Doctor</th>
-                                <th className="p-4">Specialization</th>
-                                <th className="p-4">Date</th>
-                                <th className="p-4">Time</th>
-                                <th className="p-4">Status</th>
+                                <th className="p-2 md:p-4">Doctor</th>
+                                <th className="p-2 md:p-4">Specialization</th>
+                                <th className="p-2 md:p-4">Date</th>
+                                <th className="p-2 md:p-4">Time</th>
+                                <th className="p-2 md:p-4">Status</th>
                             </tr>
                         </thead>
 
                         <tbody>
-
                             {getMyAppoinmentsResponse?.loading && (
                                 <tr>
                                     <td colSpan="5" className="text-center p-6 text-gray-500">
-                                        <Loader/>
+                                        <Loader />
                                     </td>
                                 </tr>
                             )}
@@ -61,35 +65,36 @@ const Appointments = () => {
                                     key={appointment._id}
                                     className="border-b hover:bg-gray-50"
                                 >
-                                    <td className="p-4 font-medium">
-                                        {appointment.doctor?.name || 'Doctor Delete'}
+                                    <td className="p-2 md:p-4 font-medium">
+                                        {appointment.doctor?.name || "Doctor Delete"}
                                     </td>
 
-                                    <td className="p-4">
+                                    <td className="p-2 md:p-4">
                                         {appointment.doctor?.specialization}
                                     </td>
 
-                                    <td className="p-4">
+                                    <td className="p-2 md:p-4">
                                         {new Date(appointment.date).toLocaleDateString()}
                                     </td>
 
-                                    <td className="p-4">
+                                    <td className="p-2 md:p-4">
                                         {appointment.time}
                                     </td>
 
-                                    <td className="p-4">
+                                    <td className="p-2 md:p-4">
                                         <span
-                                            className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(appointment.status)}`}
+                                            className={`px-3 py-1 rounded-full text-xs md:text-sm font-medium ${getStatusColor(
+                                                appointment.status
+                                            )}`}
                                         >
                                             {appointment.status}
                                         </span>
                                     </td>
                                 </tr>
                             ))}
-
                         </tbody>
-                    </table>
 
+                    </table>
                 </div>
 
             </div>

@@ -1,4 +1,5 @@
 import React from "react";
+
 import Cookies from "js-cookie";
 import Sidebar from "../../componets/sideBar";
 
@@ -8,16 +9,11 @@ const Profile = () => {
 
   const user = userCookie ? JSON.parse(userCookie) : null;
 
-  console.log(user)
-
   return (
 
-    <div className="flex bg-gray-100 min-h-screen">
-
-      {/* Sidebar */}
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
       <Sidebar />
 
-      {/* Page Content */}
       <div className="flex-1 p-8">
 
         <h2 className="text-2xl font-bold mb-6">

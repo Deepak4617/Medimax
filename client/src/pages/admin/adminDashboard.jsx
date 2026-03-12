@@ -1,7 +1,6 @@
 import React from "react";
 import Sidebar from "../../componets/sideBar";
 import Navbar from "../../componets/navBar";
-
 import { useAuthSelector } from "../../services/selector/authSelector";
 
 const AdminDashboard = () => {
@@ -25,44 +24,56 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className="flex">
 
-      <Sidebar role="admin" />
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
 
-      <div className="flex-1 bg-gray-100 min-h-screen">
+      {/* Sidebar */}
+      <Sidebar />
 
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+
+        {/* Navbar */}
         <Navbar />
 
-        <div className="p-6 grid grid-cols-4 gap-6">
+        {/* Page Content */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
 
-          {/* Doctors */}
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="text-lg font-bold">Doctors</h3>
-            <p className="text-3xl text-blue-600 font-bold">
-              {getAllDoctorsResponse?.loading ? "..." : doctorsCount}
-            </p>
-          </div>
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">
+            Dashboard
+          </h2>
 
-          {/* Patients */}
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="text-lg font-bold">Patients</h3>
-            <p className="text-3xl text-green-600 font-bold">
-              {getAllPatientsResponse?.loading ? "..." : patientsCount}
-            </p>
-          </div>
+          {/* Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-          {/* Appointments */}
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="text-lg font-bold">Appointments</h3>
-            <p className="text-3xl text-purple-600 font-bold">
-              {getAllAppointmentsResponse?.loading ? "..." : appointmentsCount}
-            </p>
-          </div>
+            <div className="bg-white p-5 rounded-lg shadow-sm">
+              <h3 className="text-gray-600 text-sm">Doctors</h3>
+              <p className="text-3xl text-blue-600 font-bold mt-2">
+                {getAllDoctorsResponse?.loading ? "..." : doctorsCount}
+              </p>
+            </div>
 
-          {/* Revenue */}
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="text-lg font-bold">Revenue</h3>
-            <p className="text-3xl text-green-600 font-bold">{totalRevenue}</p>
+            <div className="bg-white p-5 rounded-lg shadow-sm">
+              <h3 className="text-gray-600 text-sm">Patients</h3>
+              <p className="text-3xl text-green-600 font-bold mt-2">
+                {getAllPatientsResponse?.loading ? "..." : patientsCount}
+              </p>
+            </div>
+
+            <div className="bg-white p-5 rounded-lg shadow-sm">
+              <h3 className="text-gray-600 text-sm">Appointments</h3>
+              <p className="text-3xl text-purple-600 font-bold mt-2">
+                {getAllAppointmentsResponse?.loading ? "..." : appointmentsCount}
+              </p>
+            </div>
+
+            <div className="bg-white p-5 rounded-lg shadow-sm">
+              <h3 className="text-gray-600 text-sm">Revenue</h3>
+              <p className="text-3xl text-green-600 font-bold mt-2">
+                ₹{totalRevenue}
+              </p>
+            </div>
+
           </div>
 
         </div>

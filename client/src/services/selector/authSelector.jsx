@@ -8,7 +8,7 @@ export const useAuthSelector = () => {
     const getAllAppointmentsResponse = useSelector((state) => state.getAllAppointments);
     const updateAppoinmentsStatusResponse = useSelector((state) => state.updateAppoinmentsStatus);
     const getMyAppoinmentsResponse = useSelector((state) => state.getMyAppointments);
-    const getDoctorAppoinmentsResponse = useSelector((state) => state.getDoctorAppointments);
+    const getDoctorAppoinmentsResponse = useSelector((state) => state.getDoctorAppoinments);
     const getAllPatientsResponse = useSelector((state) => state.getAllPatients);
     const createBillingResponse = useSelector((state) => state.createBilling);
     const getAllBillsResponse = useSelector((state) => state.getAllBills);

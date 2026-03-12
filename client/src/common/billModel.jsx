@@ -20,74 +20,72 @@ const BillModel = ({ showModal, setShowModal }) => {
 
     const handleItemChange = (index, field, value) => {
 
-    const updatedItems = [...billData.items];
-    updatedItems[index][field] = value;
-
-    setBillData({
-      ...billData,
-      items: updatedItems
-    });
-
-  };
-
-  const addItem = () => {
-
-    setBillData({
-      ...billData,
-      items: [...billData.items, { name: "", price: "" }]
-    });
-
-  };
-
-  const handleCreateBill = () => {
-
-    const payload = {
-      patientId: billData.patientId,
-      doctorId: billData.doctorId,
-      items: billData.items.map((item) => ({
-        name: item.name,
-        price: Number(item.price)
-      }))
-    };
-
-    dispatch(createBilling(payload))
-      .unwrap()
-      .then((res) => {
-
-        console.log("Bill Created:", res);
-
-        setShowModal(false);
+        const updatedItems = [...billData.items];
+        updatedItems[index][field] = value;
 
         setBillData({
-          patientId: "",
-          doctorId: "",
-          items: [{ name: "", price: "" }]
+            ...billData,
+            items: updatedItems
         });
 
-      })
-      .catch((err) => {
+    };
 
-        console.log("Error:", err);
+    const addItem = () => {
 
-      });
+        setBillData({
+            ...billData,
+            items: [...billData.items, { name: "", price: "" }]
+        });
 
-  };
+    };
+
+    const handleCreateBill = () => {
+
+        const payload = {
+            patientId: billData.patientId,
+            doctorId: billData.doctorId,
+            items: billData.items.map((item) => ({
+                name: item.name,
+                price: Number(item.price)
+            }))
+        };
+
+        dispatch(createBilling(payload))
+            .unwrap()
+            .then((res) => {
+
+                console.log("Bill Created:", res);
+
+                setShowModal(false);
+
+                setBillData({
+                    patientId: "",
+                    doctorId: "",
+                    items: [{ name: "", price: "" }]
+                });
+
+            })
+            .catch((err) => {
+
+                console.log("Error:", err);
+
+            });
+
+    };
 
     return <>
         {showModal && (
 
-            <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+            <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
 
-                <div className="bg-white p-6 rounded w-[420px]">
+                <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-xl">
 
                     <h3 className="text-xl font-bold mb-4">
                         Create Bill
                     </h3>
 
-                    {/* PATIENT */}
-
                     <select
-                        className="border p-2 w-full mb-3 rounded"
+                        className="border p-2 sm:w-full mb-3 rounded text-sm mr-4"
                         value={billData.patientId}
                         onChange={(e) =>
                             setBillData({ ...billData, patientId: e.target.value })
@@ -100,13 +98,12 @@ const BillModel = ({ showModal, setShowModal }) => {
                                 {patient.name}
                             </option>
                         ))}
-
                     </select>
 
                     {/* DOCTOR */}
 
                     <select
-                        className="border p-2 w-full mb-3 rounded"
+                        className="border p-2 sm:w-full mb-3 rounded text-sm"
                         value={billData.doctorId}
                         onChange={(e) =>
                             setBillData({ ...billData, doctorId: e.target.value })
@@ -119,19 +116,18 @@ const BillModel = ({ showModal, setShowModal }) => {
                                 {doctor.name}
                             </option>
                         ))}
-
                     </select>
 
                     {/* ITEMS */}
 
                     {billData.items.map((item, index) => (
 
-                        <div key={index} className="flex gap-2 mb-2">
+                        <div key={index} className="flex flex-col sm:flex-row gap-2 mb-2">
 
                             <input
                                 type="text"
                                 placeholder="Item Name"
-                                className="border p-2 rounded w-1/2"
+                                className="border p-2 rounded w-full"
                                 value={item.name}
                                 onChange={(e) =>
                                     handleItemChange(index, "name", e.target.value)
@@ -141,7 +137,7 @@ const BillModel = ({ showModal, setShowModal }) => {
                             <input
                                 type="number"
                                 placeholder="Price"
-                                className="border p-2 rounded w-1/2"
+                                className="border p-2 rounded w-full"
                                 value={item.price}
                                 onChange={(e) =>
                                     handleItemChange(index, "price", e.target.value)

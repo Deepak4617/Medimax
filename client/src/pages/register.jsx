@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthSelector } from "../services/selector/authSelector";
+
 import authRegister from "../services/api/auth/authRegister";
 import useCustomDispatch from "../hooks/useCustomDispatch";
 import Loader from "../common/loader";

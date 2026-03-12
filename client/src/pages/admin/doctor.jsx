@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
-import Navbar from "../../componets/navBar";
 import Sidebar from "../../componets/sideBar";
-
 import getAllDoctors from "../../services/api/doctor/getAllDoctors";
 import addDoctors from "../../services/api/doctor/addDoctors";
 import deleteDoctor from "../../services/api/doctor/deleteDoctor";
 
-import { useAuthSelector } from "../../services/selector/authSelector";
 import Loader from "../../common/loader2";
 import AddDoctorModal from "../../common/addDoctorsModel";
 import DeleteConfirmModal from "../../common/deleteConfirmModel";
+import useCustomDispatch from "../../hooks/useCustomDispatch";
+
+import { useAuthSelector } from "../../services/selector/authSelector";
 
 const Doctors = () => {
 
@@ -23,7 +22,7 @@ const Doctors = () => {
     specialization: ""
   };
 
-  const dispatch = useDispatch();
+  const dispatch = useCustomDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const [userDetail, setUserDetail] = useState(initialFormData);
@@ -99,77 +98,59 @@ const Doctors = () => {
 
   return (
 
-    <div className="flex">
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
 
-      {/* Sidebar */}
       <Sidebar />
 
       <div className="flex-1 bg-gray-100 min-h-screen">
 
-        {/* Navbar */}
-        <Navbar />
+        <div className="p-4 sm:p-6">
 
-        <div className="p-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
 
-          <div className="flex justify-between items-center mb-6">
-
-            <h2 className="text-2xl font-bold">
+            <h2 className="text-xl sm:text-2xl font-bold">
               Doctors Management
             </h2>
 
             <button
               onClick={() => setShowModal(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full sm:w-auto"
             >
               Add Doctor
             </button>
 
           </div>
 
-          {/* ================= TABLE ================= */}
+          <div className="bg-white shadow rounded-lg overflow-x-auto">
 
-          <div className="bg-white shadow rounded-lg overflow-hidden">
-
-            <table className="w-full text-left">
+            <table className="min-w-full text-left">
 
               <thead className="bg-gray-50 border-b">
-
                 <tr>
                   <th className="p-4">Name</th>
                   <th className="p-4">Email</th>
                   <th className="p-4">Specialization</th>
                   <th className="p-4 text-center">Actions</th>
                 </tr>
-
               </thead>
 
               <tbody>
 
-                {/* Loading */}
-
                 {getAllDoctorsResponse?.loading && (
-
                   <tr>
                     <td colSpan="4" className="text-center p-6">
                       <Loader />
                     </td>
                   </tr>
-
                 )}
 
-                {/* No Data */}
-
                 {!getAllDoctorsResponse?.loading && doctors.length === 0 && (
-
                   <tr>
                     <td colSpan="4" className="text-center p-6 text-gray-500">
                       No Doctors Found
                     </td>
                   </tr>
-
                 )}
-
-                {/* Doctors List */}
 
                 {doctors.map((doc) => (
 
@@ -190,14 +171,18 @@ const Doctors = () => {
                       {doc.specialization}
                     </td>
 
-                    <td className="p-4 flex justify-center gap-3">
+                    <td className="p-4 text-center">
 
-                      <button
-                        onClick={() => handleDeleteClick(doc._id)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
-                      >
-                        Delete
-                      </button>
+                      <div className="flex justify-center gap-3">
+
+                        <button
+                          onClick={() => handleDeleteClick(doc._id)}
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+                        >
+                          Delete
+                        </button>
+
+                      </div>
 
                     </td>
 
@@ -215,7 +200,6 @@ const Doctors = () => {
 
       </div>
 
-      {/* ================= ADD DOCTOR MODAL ================= */}
 
       <AddDoctorModal
         showModal={showModal}

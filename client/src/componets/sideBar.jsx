@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -8,20 +8,21 @@ import {
   FaCalendarCheck,
   FaMoneyBill,
   FaTachometerAlt,
-  FaUser
+  FaUser,
+  FaBars,
+  FaTimes
 } from "react-icons/fa";
 
 const Sidebar = () => {
 
   const location = useLocation();
+  const [open, setOpen] = useState(false);
 
   const user = Cookies.get("user")
     ? JSON.parse(Cookies.get("user"))
     : null;
 
   const role = user?.role;
-
-  /* ------------------ MENU CONFIG ------------------ */
 
   const adminMenu = [
     { name: "Dashboard", path: "/admin/dashboard", icon: <FaTachometerAlt /> },
@@ -39,58 +40,84 @@ const Sidebar = () => {
 
   const patientMenu = [
     { name: "Dashboard", path: "/patient/dashboard", icon: <FaTachometerAlt /> },
-    { name: "Appoinment History", path: "/patient/appointment-history", icon: <FaUserMd /> },
     { name: "Appointments", path: "/patient/appointments", icon: <FaCalendarCheck /> },
-    { name: "Book Appoinment", path: "/patient/book-appointment", icon: <FaUser /> },
-    { name: "Doctor", path: "/patient/doctors", icon: <FaUser /> },
+    { name: "Doctors", path: "/patient/doctors", icon: <FaUserMd /> },
     { name: "Profile", path: "/patient/profile", icon: <FaUser /> },
-    { name: "Billing", path: "/patient/billing", icon: <FaUser /> },
+    { name: "Billing", path: "/patient/billing", icon: <FaMoneyBill /> },
 
   ];
 
-  /* ------------------ ROLE MENU ------------------ */
-
   let menu = [];
 
-  if (role === "admin") {
-    menu = adminMenu;
-  }
-
-  if (role === "doctor") {
-    menu = doctorMenu;
-  }
-
-  if (role === "patient") {
-    menu = patientMenu;
-  }
+  if (role === "admin") menu = adminMenu;
+  if (role === "doctor") menu = doctorMenu;
+  if (role === "patient") menu = patientMenu;
 
   return (
+    <>
+      {/* MOBILE TOP NAVBAR */}
+      <div className="md:hidden flex items-center bg-blue-900 text-white p-4 shadow">
 
-    <div className="w-64 h-screen bg-blue-900 text-white p-5">
+        <button onClick={() => setOpen(true)} className="mr-4">
+          <FaBars size={22} />
+        </button>
 
-      <h1 className="text-2xl font-bold mb-10">
-        Hospital Panel
-      </h1>
+        <h1 className="text-lg font-semibold">
+          Hospital Panel
+        </h1>
 
-      {menu.map((item) => (
+      </div>
 
-        <Link
-          key={item.path}
-          to={item.path}
-          className={`flex items-center gap-3 p-3 mb-3 rounded
-          ${
-            location.pathname === item.path
-              ? "bg-blue-600"
-              : "hover:bg-blue-700"
-          }`}
-        >
-          {item.icon}
-          {item.name}
-        </Link>
+      {/* OVERLAY */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
-      ))}
+      {/* SIDEBAR */}
+      <div
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-blue-900 text-white p-6 transform transition-transform duration-300 z-50
+        ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+      >
 
-    </div>
+        {/* MOBILE CLOSE BUTTON */}
+        <div className="flex justify-between items-center mb-10 md:hidden">
+          <h1 className="text-xl font-bold">Hospital Panel</h1>
+
+          <FaTimes
+            className="cursor-pointer"
+            onClick={() => setOpen(false)}
+          />
+        </div>
+
+        {/* DESKTOP TITLE */}
+        <h1 className="text-2xl font-bold mb-10 hidden md:block">
+          Hospital Panel
+        </h1>
+
+        {menu.map((item) => (
+
+          <Link
+            key={item.path}
+            to={item.path}
+            onClick={() => setOpen(false)}
+            className={`flex items-center gap-3 p-3 rounded mb-3 transition
+            ${
+              location.pathname === item.path
+                ? "bg-blue-700"
+                : "hover:bg-blue-800"
+            }`}
+          >
+            {item.icon}
+            {item.name}
+          </Link>
+
+        ))}
+
+      </div>
+    </>
   );
 };
 
