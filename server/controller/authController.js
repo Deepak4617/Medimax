@@ -46,6 +46,7 @@ const register = async (req, res, next) => {
     next(error);
   }
 };
+
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -83,4 +84,25 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login }
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "User logged out successfully",
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Logout failed",
+    });
+  }
+};
+
+module.exports = { register, login, logout}

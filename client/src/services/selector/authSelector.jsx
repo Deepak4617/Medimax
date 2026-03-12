@@ -16,6 +16,7 @@ export const useAuthSelector = () => {
     const addDoctorsResponse = useSelector((state) => state.addDoctors);
     const deleteDoctorResponse = useSelector((state) => state.deleteDoctor);
     const deletePatientResponse = useSelector((state) => state.deletePatient);
+    const authLogoutResponse = useSelector((state) => state.authLogout);
 
 
     return {
@@ -33,6 +34,7 @@ export const useAuthSelector = () => {
         payPatientBillResponse,
         addDoctorsResponse,
         deleteDoctorResponse,
-        deletePatientResponse
+        deletePatientResponse,
+        authLogoutResponse
     }
 }

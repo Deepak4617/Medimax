@@ -9,6 +9,7 @@ export const rootReducer = combineReducers({
 
     authRegister: auth?.authRegisterSlice,
     authLogin: auth?.authLoginSlice,
+    authLogout: auth?.authLogoutSlice,
 
     appoinmentCreate: patient?.appoinmentCreateSlice,
     getMyAppointments: patient?.getMyAppointmentsSlice,

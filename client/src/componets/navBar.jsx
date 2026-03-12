@@ -1,14 +1,29 @@
 import React from "react";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
+import authLogout from "../services/api/auth/authLogout";
+import useCustomDispatch from "../hooks/useCustomDispatch";
 
 const Navbar = () => {
 
+  const dispatch = useCustomDispatch();
+  const navigate = useNavigate();
+
   const user = JSON.parse(Cookies.get("user") || "{}");
 
-  const handleLogout = () => {
-    Cookies.remove("token");
-    Cookies.remove("user");
-    window.location.href = "/login";
+  const handleLogout = async () => {
+    try {
+
+      const result = await dispatch(authLogout());
+
+      if (result?.payload?.success) {
+        navigate("/login");
+      }
+
+    } catch (error) {
+      console.log("Logout failed", error);
+    }
   };
 
   return (

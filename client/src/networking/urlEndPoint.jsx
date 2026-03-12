@@ -1,5 +1,6 @@
 export const auth_register = "auth/register";
 export const auth_login = "auth/login";
+export const auth_logout = "auth/logout";
 
 export const appoinment_create = '/appointments/create';
 export const get_all_appoinments = '/appointments/all';
