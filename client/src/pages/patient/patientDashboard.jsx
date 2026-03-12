@@ -46,7 +46,7 @@ const PatientDashboard = () => {
 
             {/* Appointment History */}
             <div
-              onClick={() => navigate("/patient/appointment-history")}
+              onClick={() => navigate("/patient/appointments")}
               className="bg-green-500 cursor-pointer text-white p-6 rounded-lg shadow hover:scale-105 transition"
             >
               <div className="flex items-center gap-3">
