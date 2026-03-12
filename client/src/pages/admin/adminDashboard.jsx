@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../../componets/sideBar";
 import Navbar from "../../componets/navBar";
+
 import { useAuthSelector } from "../../services/selector/authSelector";
+import useCustomDispatch from "../../hooks/useCustomDispatch";
+
+import getAllAppointments from "../../services/api/doctor/getAllAppoinments";
+import getAllBills from "../../services/api/billing/getAllBills";
+import getAllDoctors from "../../services/api/doctor/getAllDoctors";
+import getAllPatients from "../../services/api/patient/getAllPatients";
 
 const AdminDashboard = () => {
+
+  const dispatch = useCustomDispatch();
 
   const {
     getAllDoctorsResponse,
@@ -11,6 +20,13 @@ const AdminDashboard = () => {
     getAllAppointmentsResponse,
     getAllBillsResponse
   } = useAuthSelector();
+
+  useEffect(() => {
+    dispatch(getAllDoctors());
+    dispatch(getAllPatients());
+    dispatch(getAllAppointments());
+    dispatch(getAllBills());
+  }, [dispatch]);
 
   const doctorsCount = getAllDoctorsResponse?.data?.doctors?.length || 0;
   const patientsCount = getAllPatientsResponse?.data?.patients?.length || 0;
@@ -24,26 +40,20 @@ const AdminDashboard = () => {
   );
 
   return (
-
     <div className="md:flex h-screen bg-gray-100 overflow-hidden">
 
-      {/* Sidebar */}
       <Sidebar role="admin" />
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
 
-        {/* Navbar */}
         <Navbar />
 
-        {/* Page Content */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
 
           <h2 className="text-xl sm:text-2xl font-bold mb-6">
             Dashboard
           </h2>
 
-          {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
             <div className="bg-white p-5 rounded-lg shadow-sm">
