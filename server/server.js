@@ -1,18 +1,19 @@
-require('dotenv').config();
+require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
-const app = express();
 
+const app = express();
 
 // 🔹 Import Routes
 const authRoute = require("./routes/authRoutes");
 const appointmentsRoutes = require("./routes/appointmentsRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
-const patientRoutes = require("./routes/patientRoutes")
+const patientRoutes = require("./routes/patientRoutes");
 const billingRoutes = require("./routes/billingRoutes");
 
 const connectDb = require("./utils/database/db");
-const errorMiddleware = require('./middleware/errorMiddleware');
+const errorMiddleware = require("./middleware/errorMiddleware");
 
 // 🔹 CORS Configuration
 const corsOptions = {
@@ -26,27 +27,27 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// ✅ VERY IMPORTANT — allow preflight
-// app.options("/*", cors(corsOptions));
-
-app.get("/", (req, res) => {
-  res.send("🚀 MedimaxAI API is running...");
-});
-
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 
-// ================= ROUTES =================
+// ================= API ROUTES =================
 
 app.use("/api/auth", authRoute);
 app.use("/api/appointments", appointmentsRoutes);
-
 app.use("/api", doctorRoutes);
-
 app.use("/api", patientRoutes);
 app.use("/api/billing", billingRoutes);
 
 app.use(errorMiddleware);
+
+// ================= SERVE REACT =================
+
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+
+// ================= SERVER =================
 
 const PORT = process.env.PORT || 5000;
 
@@ -55,7 +56,6 @@ connectDb()
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });
-
   })
   .catch((err) => {
     console.error("Database connection failed:", err);
