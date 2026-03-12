@@ -8,7 +8,7 @@ const Navbar = () => {
   const handleLogout = () => {
     Cookies.remove("token");
     Cookies.remove("user");
-    window.location.href = "/login";
+    window.location.href = "auth/login";
   };
 
   return (
