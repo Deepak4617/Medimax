@@ -42,15 +42,12 @@ app.use(errorMiddleware);
 // ================= SERVE REACT =================
 
 // Serve React build
-const path = require("path");
-
-// Serve React build
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// React Router fix (important)
-app.get(/.*/, (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
+
 // ================= SERVER =================
 
 const PORT = process.env.PORT || 5000;
