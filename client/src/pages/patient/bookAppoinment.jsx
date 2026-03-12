@@ -67,12 +67,10 @@ const BookAppointment = () => {
 
   return (
 
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
 
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Page Content */}
       <div className="flex-1 p-8">
 
         <h2 className="text-2xl font-bold mb-6">
