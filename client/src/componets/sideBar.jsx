@@ -44,6 +44,8 @@ const Sidebar = () => {
     { name: "Doctors", path: "/patient/doctors", icon: <FaUserMd /> },
     { name: "Profile", path: "/patient/profile", icon: <FaUser /> },
     { name: "Billing", path: "/patient/billing", icon: <FaMoneyBill /> },
+    { name: "Book Appointment", path: "/patient/book-appointment", icon: <FaCalendarCheck /> },
+
 
   ];
 

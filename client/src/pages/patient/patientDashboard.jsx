@@ -13,7 +13,7 @@ const PatientDashboard = () => {
   return (
 
     <div className="md:flex h-screen bg-gray-100 overflow-hidden">
-      <Sidebar />
+      <Sidebar role="patient" />
 
       <div className="flex-1 bg-gray-100 min-h-screen">
 

@@ -28,7 +28,7 @@ const AdminDashboard = () => {
     <div className="md:flex h-screen bg-gray-100 overflow-hidden">
 
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar role="admin" />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
