@@ -67,3 +67,37 @@ Database
 
 ### Doctor Dashboard
 ![Doctor](doctor.png)
+
+## ⚙️ Installation
+
+Clone the repository
+
+git clone https://github.com/yourusername/medimax-ai.git
+
+Install backend dependencies
+
+cd server
+npm install
+
+Install frontend dependencies
+
+cd client
+npm install
+
+Start Backend
+
+npm run server
+
+Start Frontend
+
+npm start
+
+## 👨‍💻 Author
+
+Deepak Kumar  
+MERN Stack Developer
+
+LinkedIn: https://www.linkedin.com/in/deepak-kumar-594832297/  
+GitHub: https://github.com/Deepak4617/
+
+⭐ If you like this project, please give it a star on GitHub!
