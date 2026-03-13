@@ -63,7 +63,7 @@ Database
 ![Admin](admin.png)
 
 ### Patient Dashboard
-![Patient](patinet.png)
+![Patient](patient.png)
 
 ### Doctor Dashboard
 ![Doctor](doctor.png)
