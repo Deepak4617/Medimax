@@ -27,7 +27,7 @@ const Doctors = () => {
   };
 
   return (
-    <div className="md:flex min-h-screen bg-gray-100 overflow-hidden">
+    <div className="md:flex h-screen bg-gray-100 overflow-hidden">
 
       <Sidebar />
 

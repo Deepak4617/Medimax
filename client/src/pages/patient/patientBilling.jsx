@@ -71,7 +71,7 @@ const PatientBilling = () => {
     };
 
     return (
-        <div className="md:flex min-h-screen bg-gray-100 overflow-hidden">
+        <div className="md:flex h-screen bg-gray-100 overflow-hidden">
             <Sidebar />
 
             <div className="flex-1 p-4 md:p-6 overflow-x-auto">

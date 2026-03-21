@@ -17,7 +17,6 @@ const Billing = () => {
   const dispatch = useCustomDispatch();
 
   const { getAllBillsResponse } = useAuthSelector();
-  console.log(getAllBillsResponse)
   const billsData = getAllBillsResponse?.data?.bills || [];
 
   // Calculate billing stats
